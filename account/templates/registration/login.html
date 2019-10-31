@@ -1,0 +1,43 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+<div class="sing_up_wrapper">
+    <h2> Войдите </h2>
+    {% if form.errors %}
+      <p>Логин или пароль неверны. Попробуйте щее раз.</p>
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated %}
+        <p>Ваша учетная запись не имеет доступа к этой странице. Чтобы продолжить,
+        пожалуйста, войдите в систему с учетной записью, которая имеет доступ.</p>
+      {% else %}
+        <p>Пожалуйста войдите, чтобы получить доступ к этой странице.</p>
+      {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table >
+
+    <tr class="file-wrapper">
+      <td>{{ form.username.label_tag }}</td>
+      <td>{{ form.username }}</td>
+    </tr>
+
+    <tr class="file-wrapper">
+      <td>{{ form.password.label_tag }}</td>
+      <td>{{ form.password }}</td>
+    </tr>
+    </table>
+
+    <input type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+</div>
+
+{% endblock %}

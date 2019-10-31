@@ -1,0 +1,42 @@
+{% extends 'catalog/base.html' %}
+{% load staticfiles %}
+{% block title %}  {% endblock %}
+
+{% block content %}
+<div id="sidebar" class="col-sm-3">
+
+    <ul>
+        <li class="selected" >
+          <a href="#">ВСЕ</a>
+        </li>
+        <li>{% if perms.catalog.can_mark_returned %}
+    <!-- We can mark a BookInstance as returned. -->
+    <!-- Perhaps add code to link to a "book return" view here. -->
+{% endif %}</li>
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+        <li><input type="search" class="form-control"><input class="form-control" type="submit" value="Поиск"></li>
+    </ul>
+</div>
+<div id="main" class="col-sm-9">
+    <h2> У вас на руках следующие книги</h2>
+
+        <table class="center margin border">
+            <tr ><th class="center">Номер</th><th class="center">     Обложка</th><th class="center">Название</th><th class="center">Дата возврата</th></tr>
+            {% for book in order %}
+
+                    {% if book.is_overdue  %}  <tr class="text-danger">{% else %} <tr>{% endif %}
+>
+                            <td >{{ forloop.counter }}</td>
+                            <td ><img class="margin" src="{{book.book.cover.url}}" width='130px' height='200px' alt="No Image Sorry"></td>
+                            <td><p>{{ book.book.title }}</p></td>
+                            <td><p>{{ book.return_date }}</p></td>
+                    </tr>
+            {% endfor %}
+        </table>
+</div>
+
+
+
+{% endblock %}

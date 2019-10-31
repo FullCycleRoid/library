@@ -1,0 +1,16 @@
+{% extends 'catalog/base.html' %}
+{% load staticfiles %}
+{% block title %}  {% endblock %}
+
+
+{% block content %}
+<h1>Delete Author</h1>
+
+<p>Дйствительно удалить книгу: {{ author }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Да, удалить" />
+</form>
+
+{% endblock %}

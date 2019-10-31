@@ -1,0 +1,36 @@
+{% extends 'catalog/base.html' %}
+{% load staticfiles %}
+{% block title %}  {% endblock %}
+
+{% block content %}
+<div id="sidebar" class="col-sm-3">
+    <h3></h3>
+    <ul>
+        <li class="selected">
+          <a href="#">ВСЕ</a>
+        </li>
+
+        <li><a>По жанрам</a></li>
+       <li><a>По алфавиту</a></li>
+       <li><a>По дате рождения</a></li>
+       <li><a>По дате смерти</a></li>
+       <li>
+            <form method="get" action="{% url 'catalog:search' %}">
+                  <input type="search" name="user_input" class="form-control"><input class="form-control" type="submit" value="Поиск">
+            </form>
+       </li>
+
+    </ul>
+</div>
+<div class="main col-sm-9">
+        <div class="author_list">
+            {% for single_author in author%}
+
+                <p><a href="{{ single_author.get_absolute_url }}">{{ single_author.name}}</a></p>
+                <a href="{{single_author.update_author}}"><input type="submit" value="Редактировать"></a>
+                <a href="{{single_author.delete_author}}"><input type="submit" value="Удалить"></a>
+
+            {% endfor %}
+        </div>
+</div>
+{% endblock %}

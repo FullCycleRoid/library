@@ -1,0 +1,12 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+    <h2> Создание, редактирование и удаление.</h2>
+    <ul>
+        <li><a href="{% url 'stuff:author_create'%}">Создать автора</a></li>
+        <li><a href="{% url 'stuff:book_create'%}">Создать книгу</a></li>
+        <li><a href="{% url 'stuff:author_update'%}">Обновить автора</a></li>
+        <li><a href="{% url 'stuff:author_delete'%}">Удалить автора</a></li>
+        <li><a href="{% url 'stuff:book_delete'%}">Удалить книгу</a></li>
+    </ul>
+{% endblock %}

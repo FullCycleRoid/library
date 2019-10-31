@@ -1,0 +1,31 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+<div class="sing_up_wrapper">
+
+<h1>Sign Up</h1>
+
+<form action="" method="POST" >
+     {% csrf_token%}
+
+    <div class="file-wrapper">
+        {{form.username.label_tag}}
+        {{form.username}}
+    </div>
+    <div class="file-wrapper">
+        {{form.password1.label_tag}}
+        {{form.password1}}
+    </div>
+
+    <div class="file-wrapper">
+
+        {{form.password2.label_tag}}
+        {{form.password2}}
+    </div>
+    <input type="submit" action="" value="Sign Up" />
+</form>
+
+</div>
+
+
+{% endblock %}

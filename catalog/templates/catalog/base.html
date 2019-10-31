@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    {% load staticfiles %}
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon_book.png'%}" type="image/x-icon">
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<body>
+  <main>
+    <header>
+        <div class="top">
+            <div class="top-item top_left_font">
+                <a href="{% url 'catalog:book_list'%}">Online Библиотека</a>
+            </div >
+            <div class="top-item">
+
+                <p> Ваш IP {{geodata.ip}}</p>
+                {% if user.is_authenticated %}
+                    <p>Пользователь: {{user.get_username}}</p>
+                    <a href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={{request.path}}">Войти</a>
+                    <a href="{% url 'sign_up' %}">Зарегистрироваться</a>
+                {% endif %}
+            </div>
+        </div>
+        <nav>
+             <div class="btn-toolbar top-bl menu" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <a class="btn btn-danger" href="{% url 'catalog:book_list'%}">КНИГИ</a>
+                        <a class="btn btn-danger" href="{% url 'catalog:author_list' %}">АВТОРЫ</a>
+                        <a class="btn btn-danger" href="{% url 'catalog:genre_list' %}">ЖАНРЫ</a>
+
+              </div>
+              <div class="btn-group mr-2" role="group" aria-label="Second group">
+                    {% if user.is_authenticated and not  perms.catalog.can_make_returned %}
+                        <a class="btn btn-success" href="{% url 'order:your_books' %}">МОИ КНИГИ </a>
+                    {% endif %}
+              </div>
+              <div class="btn-group" role="group" aria-label="Third group">
+
+                    {% if perms.catalog.can_make_returned %}
+                    {% endif %}
+              </div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="content">
+      {% block content %}{% endblock %}
+     </section>
+  </main>
+
+</body>
+</html>
