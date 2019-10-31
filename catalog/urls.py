@@ -7,11 +7,12 @@ app_name = 'catalog'
 urlpatterns = [
     url(r'^author/$', views.AuthorListView.as_view(), name='author_list'),
     url(r'search_result/$', views.SearchView.as_view(), name='search'),
-    url(r'^genres/$', views.GenreListView.as_view(), name='genre_list'),
+    url(r'^genre/$', views.GenreListView.as_view(), name='genre_list'),
+    url(r'^genre_filter_result/(?P<slug>[-\w]+)/$', views.GenreFilterView.as_view(), name='genre_filter'),
     url(r'^$', views.BookListView.as_view(), name='book_list'),
     url(r'^author/(?P<slug>[-\w]+)/$', views.AuthorDetailView.as_view(), name='author_detail'),
     url(r'^(?P<slug>[-\w]+)/$', views.BookDetailView.as_view(), name='book_detail'),
-    # url(r'^book_reservation/$', views.BookInstanceView, name='book_instance')
+
 
 
 ]

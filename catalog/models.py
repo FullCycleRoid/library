@@ -7,14 +7,14 @@ from django.urls import reverse
 
 class Genre(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название жанра')
-    slug = models.SlugField(max_length=100, default='default')
+    slug = models.SlugField(max_length=100)
 
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
 
     def genre_filter(self):
-        return reverse('catalog:genre_list', kwargs={'slug': self.slug})
+        return reverse('catalog:genre_filter', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name

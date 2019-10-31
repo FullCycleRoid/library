@@ -1,0 +1,52 @@
+{% extends 'catalog/base.html' %}
+{% load staticfiles %}
+{% block title %}  {% endblock %}
+
+{% block content %}
+<div id="sidebar" class="col-sm-3">
+
+    <ul>
+        <li class="selected" >
+          <a href="#">ВСЕ</a>
+        </li>
+
+        <li>Количество посещений страницы {{visits}}</li>
+        <li>
+            {% if perms.catalog.can_make_returned %}
+                <a href="{% url 'stuff:book_create' %}"><input type="submit" value="Добавить книгу"></a>
+                <a href="{% url 'stuff:author_create'%}"><input type="submit" value="Добавить автора"></a>
+            {% endif %}
+        </li>
+
+       <li>
+            <form method="get" action="{% url 'catalog:search' %}">
+                  <input type="search" name="user_input" class="form-control"><input class="form-control" type="submit" value="Поиск">
+            </form>
+       </li>
+
+
+        <h2>Наш офис</h2>
+
+
+    </ul>
+</div>
+<div class="main col-sm-9">
+    {% for book in book_data%}
+    <div class="gallery">
+        <a  class="gallery__link" href="{{book.get_absolute_url}}">
+            {% if book.cover %} <img class="gallery__img" src="{{book.cover.url}}" > {% else %} <img src="{% static 'img/no-image.jpg' %}"> {%endif%}
+        </a>
+        <p class="gallery__paragraph">{{book.authors}}</p>
+        <a class="gallery__link" href="{{book.get_absolute_url}}">{{book.title}}</a>
+
+                    {% if perms.catalog.can_make_returned %}
+                        <div class="gallery__input">
+                            <a  href="{{book.book_update}}"><input type="submit" value="Редактировать"></a>
+                            <a   href="{{book.book_delete}}"><input type="submit" value="Удалить "></a>
+                        </div>
+                    {% endif %}
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

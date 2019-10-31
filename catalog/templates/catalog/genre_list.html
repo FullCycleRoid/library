@@ -21,7 +21,7 @@
         <div class="book_item1">
             {% for item in genre %}
             <p>
-                <a href="{% url '' %}">
+                <a href="{{item.genre_filter}}">
                     {{ item }}
                 </a>
             </p>

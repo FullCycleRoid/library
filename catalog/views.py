@@ -45,10 +45,13 @@ class GenreListView(ListView):
     template_name = 'catalog/genre_list.html'
     context_object_name = 'genre'
 
+class GenreFilterView(ListView):
+    template_name = 'catalog/genre_filter.html'
+    model = Book
     def get_context_data(self, *, object_list=None, **kwargs):
-        query = self.request.GET.get('')
-        context = super(GenreListView, self).get_context_data(**kwargs)
-        context['book_data'] = Book.objects.filter(leanguage=)
+        print(self.kwargs['slug'])
+        context = super(GenreFilterView, self).get_context_data(**kwargs)
+        context['book_data'] = Book.objects.filter(genre__slug=self.kwargs['slug'])
         return context
 
 
