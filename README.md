@@ -1,2 +1,18 @@
 # book_library
-# library_project
+admin: admin/admin
+stuff: stuff/admin
+
+Simple Study project for developing skills work with Django framework
+
+
+- class base view
+- authenticated system
+- working with permissons
+- stuff rights allows add/delete/update books to the system
+- book reserved features for register users
+- searching books through DB
+- HTML/CSS
+and using side ip API for good measure
+
+
+Progect  deploed to HEROKU
