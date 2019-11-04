@@ -27,8 +27,10 @@
             {% for single_author in author%}
 
                 <p><a href="{{ single_author.get_absolute_url }}">{{ single_author.name}}</a></p>
-                <a href="{{single_author.update_author}}"><input type="submit" value="Редактировать"></a>
-                <a href="{{single_author.delete_author}}"><input type="submit" value="Удалить"></a>
+                {% if perm.catalog.can_mark_returned %}
+                    <a href="{{single_author.update_author}}"><input type="submit" value="Редактировать"></a>
+                    <a href="{{single_author.delete_author}}"><input type="submit" value="Удалить"></a>
+                {% endif %}
 
             {% endfor %}
         </div>

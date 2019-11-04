@@ -56,6 +56,7 @@ class Book(models.Model):
     def book_update(self):
         return reverse('stuff:book_update', kwargs={'pk': self.pk})
 
+
 class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique key for this particular key')
     book = models.ForeignKey(Book, verbose_name='Книга', on_delete=models.SET_NULL, null=True)
@@ -76,7 +77,7 @@ class BookInstance(models.Model):
         ordering = ['return_date']
         verbose_name = 'Экземпляр книги'
         verbose_name_plural = 'Экземпляр книг'
-        permissions = (('can_mark_returned','Set book as returned'),)
+        permissions = (('can_mark_returned', 'Set book as returned'),)
 
     def __str__(self):
         return '{} {}'.format(self.id, self.book.title)
@@ -87,9 +88,8 @@ class BookInstance(models.Model):
             return True
         return False
 
-    def book_reserved(self):
-        update_status = self.status = 'r'
-        return update_status
+    def reserved_book(self):
+        return reverse('catalog:reserved_book', kwargs={'pk': self.pk})
 
 
 class Author(models.Model):

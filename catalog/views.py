@@ -1,8 +1,13 @@
 from django.db.models import Q
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView, View
-from .models import Book, Language, Author, BookInstance, Genre
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, FormView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import FormMixin
+
+from catalog.forms import BookReserveForm
+from .models import Book, Author, BookInstance, Genre
 
 
 # Create your views here.
@@ -21,14 +26,25 @@ class BookListView(ListView):
 class BookDetailView(DetailView):
     model = Book
     context_object_name = 'book'
-
+    form_class = BookReserveForm
 
     def get_context_data(self, **kwargs):
         context = super(BookDetailView, self).get_context_data(**kwargs)
-        context['book_instance'] = BookInstance.objects.filter(book__slug=self.kwargs['slug']).filter(status='m')
-
+        context['book_instance'] = BookInstance.objects.filter(book__slug=self.kwargs['slug'], status='m')
         return context
 
+
+
+def book_reserve(request):
+
+    current_book = request.POST.get('book_id')
+    book = Book.objects.get(id=current_book)
+    slug = book.slug
+    book_instance = BookInstance.objects.filter(book=book, status='m').first()
+    book_instance.status = 'r'
+    book_instance.borrower = request.user
+    book_instance.save()
+    return redirect("catalog:book_detail", slug=slug)
 
 class AuthorListView(ListView):
     model = Author
@@ -66,3 +82,5 @@ class SearchView(ListView):
                                         | Q(language__name__icontains=query))
 
         return book_data
+
+

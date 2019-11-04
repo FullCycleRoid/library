@@ -23,7 +23,8 @@
 <div id="main" class="col-sm-9">
     <div class="book_detail">
         <div class="book_item1">
-        {% for book in object_list %}
+            {{ object_list }}
+            {% for book in object_list %}
 
                     <div class="book_detail">
         <div class="book_detail__item">

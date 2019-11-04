@@ -32,9 +32,11 @@
             <p><strong>Язык: </strong> {{book.language}}</p>
             <p><strong>Количество доступных книг: </strong> {{book_instance.count}}</p>
             {% if user.is_authenticated and not perm.catalog.can_mark_returned %}
-
-                <a href="{{book.book_reserved}}"><input name='reserved' type="submit" value="Взять книгу"></a>
-
+                <form method="POST" action="{% url 'catalog:book_reserve' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="book_id" value="{{book.id}}">
+                    <input type="submit" name="reserve" value="Взять книгу">
+                </form>
             {% endif %}
 
             {% if perm.catalog.can_mark_returned%}
