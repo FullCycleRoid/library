@@ -2,7 +2,7 @@
 admin: admin/admin
 stuff: stuff/admin
 
-Simple Study project for developing skills work with Django framework
+Study project to raise the skill woking with Django framework.
 
 
 - class base view
